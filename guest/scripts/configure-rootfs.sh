@@ -47,7 +47,7 @@ case "$root" in
     fail "refusing unsafe root: $root"
     ;;
 esac
-[[ -d $root/usr/share/omarchy ]] || fail "materialize Omarchy before configuring the rootfs"
+[[ -d $root/opt/orbit/src/orbit_runtime ]] || fail "materialize Orbit before configuring the rootfs"
 [[ -n $spec ]] || spec="$guest_dir/spec.json"
 [[ -f $spec ]] || fail "guest spec not found: $spec"
 
@@ -133,21 +133,14 @@ arm_mirrorlist="$guest_dir/mirrorlist.aarch64"
 install -m 0644 "$guest_dir/$pacman_input" "$root/etc/pacman.conf"
 install -m 0644 "$arm_mirrorlist" "$root/etc/pacman.d/mirrorlist"
 
-# Omarchy's channel templates stay authentic. Its supported hook restores the
-# final Try Omarchy-owned ARM configuration after a template is copied to /etc
-# and before pacman refreshes its databases.
+# Orbit does not use Omarchy's channel templates or owner-provisioning hook;
+# the live image ships a single root account with the runtime pre-enabled.
+# Keep only the ARM pacman refresh hook (mirrors must survive a pacman refresh).
 refresh_hook="$guest_dir/fragments/pre-refresh-pacman-restore-arm.sh"
 [[ -f $refresh_hook ]] || fail "ARM pacman refresh hook not found: $refresh_hook"
-install -d -m 0755 "$root/etc/skel/.config/omarchy/hooks/pre-refresh-pacman.d"
+install -d -m 0755 "$root/etc/pacman.d/hooks"
 install -m 0755 "$refresh_hook" \
-  "$root/etc/skel/.config/omarchy/hooks/pre-refresh-pacman.d/restore-arm-pacman"
-
-provision_unit="$root/usr/share/omarchy/install/provisioning/omarchy-provision-owner.service"
-[[ -f $provision_unit ]] || fail "pinned upstream owner-provisioning service is missing"
-mkdir -p "$root/etc/systemd/system" "$root/var/lib/omarchy/provisioning"
-install -m 0644 "$provision_unit" "$root/etc/systemd/system/omarchy-provision-owner.service"
-: >"$root/var/lib/omarchy/provisioning/pending"
-printf '%s\n' audio input users video >"$root/var/lib/omarchy/provisioning/groups"
+  "$root/etc/pacman.d/hooks/restore-arm-pacman"
 
 # No persistent logs, random seed, or package cache should ship in the factory image.
 rm -rf "$root/var/log/journal" "$root/var/lib/systemd/random-seed"
@@ -166,4 +159,4 @@ python3 "$guest_dir/scripts/write-provenance.py" \
   --spec "$spec" \
   --output "$root/usr/share/try-omarchy/provenance.json"
 
-echo "Configured Omarchy $profile profile in $root"
+echo "Configured Orbit $profile profile in $root"

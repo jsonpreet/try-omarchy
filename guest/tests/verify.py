@@ -403,7 +403,7 @@ def main() -> None:
         "guest builder pins Rust for source-built components",
     )
 
-    materialize = read(GUEST / "scripts/materialize-omarchy.sh")
+    materialize = read(GUEST / "scripts/materialize-orbit.sh")
     check(
         'mkdir -p "$root/etc/skel/.local/state/omarchy/toggles/hypr"' in materialize
         and 'copy_contents "$source_dir/default/hypr/toggles"' not in materialize
@@ -538,18 +538,18 @@ def main() -> None:
     build = read(GUEST / "build.sh")
     check(
         "verify-screensaver-override.py" in build
-        and build.index("verify-screensaver-override.py") < build.index("materialize-omarchy.sh"),
+        and build.index("verify-screensaver-override.py") < build.index("materialize-orbit.sh"),
         "every guest build checks the screensaver override against its pinned source",
     )
     check(
         "verify-background-switcher-override.py" in build
         and build.index("verify-background-switcher-override.py")
-        < build.index("materialize-omarchy.sh"),
+        < build.index("materialize-orbit.sh"),
         "every guest build checks the background picker override against its pinned source",
     )
     check(
         "apply-omarchy-backports.py" in build
-        and build.index("materialize-omarchy.sh") < build.index("apply-omarchy-backports.py")
+        and build.index("materialize-orbit.sh") < build.index("apply-omarchy-backports.py")
         < build.index("configure-rootfs.sh"),
         "reviewed Omarchy backports apply only to the verified staged source",
     )

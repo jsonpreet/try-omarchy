@@ -20,7 +20,8 @@ read_spec() {
 }
 
 locale-gen
-passwd --lock root >/dev/null
+# Orbit ships a single-user live runtime: root stays usable for the owner,
+# unlike Omarchy's owner-provisioning flow (no first-boot account wizard).
 systemctl enable NetworkManager.service
 systemctl enable systemd-resolved.service
 
@@ -28,16 +29,6 @@ systemctl enable systemd-resolved.service
 # runtimes after it has already written the link.
 ln -sfn /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
 
-# Account, password, theme, and per-user state belong to Omarchy's real owner
-# provisioning flow on first boot.
-[[ -x /usr/bin/omarchy-provision-owner ]] || { echo "Missing upstream owner provisioner" >&2; exit 1; }
-[[ -f /var/lib/omarchy/provisioning/pending ]] || { echo "Factory provisioning is not armed" >&2; exit 1; }
-expected_mise=$(read_spec '["supplyChain"]["mise"]["reportedVersion"]')
-[[ -x /usr/bin/mise ]] || { echo "Missing pinned ARM64 mise" >&2; exit 1; }
-[[ $(/usr/bin/mise --version) == "$expected_mise" ]] || { echo "Pinned mise identity mismatch" >&2; exit 1; }
-expected_ttfx=$(read_spec '["supplyChain"]["ttfx"]["reportedVersion"]')
-[[ -x /usr/bin/ttfx ]] || { echo "Missing pinned ARM64 ttfx" >&2; exit 1; }
-[[ $(/usr/bin/ttfx --version) == "$expected_ttfx" ]] || { echo "Pinned ttfx identity mismatch" >&2; exit 1; }
 expected_hyprland="$(read_spec '["supplyChain"]["hyprland"]["version"]')-$(read_spec '["supplyChain"]["hyprland"]["pkgrel"]')"
 [[ $(pacman -Q hyprland) == "hyprland $expected_hyprland" ]] || {
   echo "Rounded-border Hyprland backport is missing" >&2
@@ -49,14 +40,15 @@ printf '%s  %s\n' "$expected_hyprland_sha256" /usr/bin/Hyprland | sha256sum -c -
   exit 1
 }
 [[ $(pacman -Qoq /usr/local/bin/omarchy-native-cursor-restore) == try-omarchy-runtime ]] || {
-  echo "Screensaver cursor helper is not owned by the Omarchy runtime package" >&2
+  echo "Screensaver cursor helper is not owned by the runtime package" >&2
   exit 1
 }
 [[ ! -e /usr/local/bin/ttfx && ! -L /usr/local/bin/ttfx ]] || {
   echo "Obsolete ttfx compatibility command shadows the packaged binary" >&2
   exit 1
 }
-systemctl enable omarchy-provision-owner.service
+systemctl enable orbit-agentd.service
+systemctl enable orbit-hud.service
 systemctl enable sddm.service
 systemctl enable omarchy-native-mac-share.service
 
@@ -73,4 +65,4 @@ update-desktop-database /usr/share/applications || true
 # Never let the container host's hardware autodetection remove the virtual
 # devices required by QEMU on the Mac.
 mkinitcpio -P
-echo "Finalized unprovisioned Omarchy factory guest"
+echo "Finalized unprovisioned Orbit factory guest"

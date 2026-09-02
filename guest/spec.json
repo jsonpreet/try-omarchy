@@ -3,14 +3,14 @@
   "image": {
     "architecture": "aarch64",
     "filesystem": "ext4",
-    "filesystemLabel": "omarchy-factory",
+    "filesystemLabel": "orbit-factory",
     "filesystemUuid": "89054943-1f4e-4f14-b934-d6db3fba4254",
     "sizeMiB": 6144,
     "sourceDateEpoch": 1788130066
   },
   "guest": {
     "profile": "factory",
-    "hostname": "omarchy-factory",
+    "hostname": "orbit-factory",
     "username": null,
     "uid": null,
     "defaultTheme": null,
@@ -22,13 +22,13 @@
     }
   },
   "upstream": {
-    "repository": "https://github.com/basecamp/omarchy",
-    "commit": "346e69e1cec6c4e8924531874af6ba010a1bc99e",
-    "tree": "24ff1b25bf85aeffa234c95c3474b7703a062c08",
-    "treeSha256": "677f90b302dc1c622a3342ca2929084475caafb12db62790f13a9f4aea8f49ae",
-    "release": "4.0.2",
-    "version": "4.0.0.alpha",
-    "channel": "quattro",
+    "repository": "https://github.com/jsonpreet/orbit-os",
+    "commit": "bac2d8dbe84ab205c54d7642622136ef03d0f6b7",
+    "tree": "567de5eb16b76f24723b516f980f37b317fc1936",
+    "treeSha256": "98a386e40dc6569010e8603de9c3e198e24485a5be3bc0c293ad4e0a87fe4934",
+    "release": "0.1.0",
+    "version": "0.1.0.alpha",
+    "channel": "orbit",
     "license": "MIT"
   },
   "supplyChain": {
