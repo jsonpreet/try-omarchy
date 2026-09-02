@@ -219,12 +219,8 @@ while [[ $staged_parent != "$root" ]]; do
   staged_parent=$(dirname "$staged_parent")
 done
 
-python3 "$guest_dir/scripts/verify-screensaver-override.py" \
-  --source "$source_dir/bin/omarchy-screensaver" \
-  --override "$guest_dir/native-overlay/usr/bin/omarchy-screensaver"
-python3 "$guest_dir/scripts/verify-background-switcher-override.py" \
-  --source "$source_dir/bin/omarchy-theme-bg-switcher" \
-  --override "$guest_dir/native-overlay/usr/bin/omarchy-theme-bg-switcher"
+# Orbit does not ship Omarchy's screensaver/theme-bg-switcher scripts, so the
+# override-verification steps below do not apply.
 "$guest_dir/scripts/materialize-orbit.sh" --root "$root" --source "$source_dir" --spec "$spec"
 python3 "$guest_dir/scripts/apply-omarchy-backports.py" --root "$root" --spec "$spec"
 "$guest_dir/scripts/configure-rootfs.sh" --root "$root" --spec "$spec"
