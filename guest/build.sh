@@ -222,7 +222,8 @@ done
 # Orbit does not ship Omarchy's screensaver/theme-bg-switcher scripts, so the
 # override-verification steps below do not apply.
 "$guest_dir/scripts/materialize-orbit.sh" --root "$root" --source "$source_dir" --spec "$spec"
-python3 "$guest_dir/scripts/apply-omarchy-backports.py" --root "$root" --spec "$spec"
+# Orbit is not an Omarchy source tree; Omarchy backports target files under
+# /usr/share/omarchy and must not be applied to the Orbit runtime.
 "$guest_dir/scripts/configure-rootfs.sh" --root "$root" --spec "$spec"
 "$guest_dir/scripts/register-omarchy-runtime.sh" \
   --root "$root" \
