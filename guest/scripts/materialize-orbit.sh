@@ -47,7 +47,6 @@ while (($#)); do
       fail "unknown option: $1"
       ;;
   esac
-  shift
 done
 
 [[ -n $root ]] || fail "--root is required"
