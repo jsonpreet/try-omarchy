@@ -45,6 +45,13 @@ repository=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["up
 commit=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["upstream"]["commit"])' "$spec")
 tree=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["upstream"]["tree"])' "$spec")
 
+# Private-repository support: when GIT_ORBIT_TOKEN is set (a fine-grained
+# read-only token for the upstream repo), authenticate the fetch URL with it.
+# The token is never written to disk by this script.
+if [[ -n ${GIT_ORBIT_TOKEN:-} ]]; then
+  repository="${repository/https:\/\/github.com\//https:\/\/x-access-token:${GIT_ORBIT_TOKEN}@github.com\/}"
+fi
+
 if [[ -d $destination/.git ]]; then
   if actual_commit=$(git -C "$destination" rev-parse --verify HEAD 2>/dev/null) && \
       actual_tree=$(git -C "$destination" rev-parse 'HEAD^{tree}' 2>/dev/null); then
