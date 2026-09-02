@@ -109,6 +109,7 @@ shared_folder_mount_point=$(python3 -c 'import json,sys; print(json.load(open(sy
 [[ $shared_folder_mount_point == /mnt/mac ]] || fail "shared folder mount point must match the link unit"
 ln -sfn /usr/lib/systemd/user/omarchy-native-mac-share-link.service \
   "$root/etc/systemd/user/default.target.wants/omarchy-native-mac-share-link.service"
+mkdir -p "$root/etc/skel/.config/hypr"
 cat "$guest_dir/fragments/hypr-monitors-arm-qemu.append.lua" >>"$root/etc/skel/.config/hypr/monitors.lua"
 
 hostname=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["guest"]["hostname"])' "$spec")
