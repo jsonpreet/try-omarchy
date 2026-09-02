@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write deterministic content digests for the authentic Omarchy payload."""
+"""Write deterministic content digests for the authentic Orbit payload."""
 
 from __future__ import annotations
 
@@ -70,7 +70,7 @@ def main() -> None:
 
     spec = json.loads(args.spec.read_text())
     root = args.root.resolve()
-    omarchy = root / "usr/share/omarchy"
+    orbit = root / "opt/orbit"
     authenticity = spec["authenticity"]
     verbatim_trees = authenticity["verbatimRuntimeTrees"]
     backported_trees = authenticity.get("backportedRuntimeTrees", [])
@@ -79,11 +79,12 @@ def main() -> None:
 
     trees = {}
     for name in verbatim_trees + backported_trees:
-        installed = omarchy / name
+        installed = orbit / name
         if not installed.exists():
             raise SystemExit(f"missing installed authenticity tree: {installed}")
         trees[name] = digest_path(installed)
-    trees["themes"] = digest_path(omarchy / "themes")
+    if (orbit / "shell").exists():
+        trees["shell"] = digest_path(orbit / "shell")
 
     backports = authenticity.get("backports", [])
     for backport in backports:
@@ -92,13 +93,13 @@ def main() -> None:
         if patch_digest != backport["patchSha256"]:
             raise SystemExit(f"backport patch digest mismatch: {backport['id']}")
         for target in backport["targets"]:
-            installed = installed_target_file(root, omarchy, target["path"])
+            installed = installed_target_file(root, orbit, target["path"])
             if digest_file(installed) != target["afterSha256"]:
                 raise SystemExit(f"backport target digest mismatch: {backport['id']} {target['path']}")
 
     payload = {
         "schemaVersion": 1,
-        "claim": "Desktop runtime derived from pinned Basecamp Omarchy source plus the enumerated reviewed backports.",
+        "claim": "Orbit runtime derived from the pinned Orbit OS source tree.",
         "upstream": spec["upstream"],
         "includedThemes": spec["themes"],
         "verbatimRuntimeTrees": verbatim_trees,

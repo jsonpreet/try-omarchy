@@ -125,70 +125,12 @@
   },
   "authenticity": {
     "verbatimRuntimeTrees": [
-      "applications",
-      "config",
-      "default",
-      "install",
-      "migrations"
+      "src"
     ],
     "backportedRuntimeTrees": [
-      "bin",
       "shell"
     ],
-    "backports": [
-      {
-        "id": "1password-arm64-installer",
-        "description": "Install 1Password from its signed ARM64 release with VM-compatible launchers and Quick Access.",
-        "reference": "https://github.com/basecamp/omarchy/issues/87",
-        "patch": "patches/omarchy/1password-arm64-installer.patch",
-        "patchSha256": "8696ada095cd8c4a5b42ed0466417e423cb4cbce122ddb52870c565d2bf40bca",
-        "targets": [
-          {
-            "path": "bin/omarchy-install-service-1password",
-            "beforeSha256": "5d5a5a9b3cf87579b4232067c9f7c78091cecf250111b802ffffa49c607f52d7",
-            "afterSha256": "ce404a13daf7cb08fab413ae0100786fc64abe6aefc403147114e6208c58b5c4"
-          },
-          {
-            "path": "default/hypr/bindings/applications.lua",
-            "beforeSha256": "6ef93bfe3df6f3b93379e0b194f3ec925cd84cfdb30115c6ece18198f21e0e3e",
-            "afterSha256": "e71e1cd7a2eaab92d4fb3f92f0ede2fb5c8519222dce1cdb38ae80c76148cf63"
-          }
-        ]
-      },
-      {
-        "id": "notification-hover-close",
-        "description": "Restore the upstream hover-revealed notification dismiss control omitted from v4.0.2.",
-        "reference": "https://github.com/basecamp/omarchy/commit/9b72edcc94513cba016f145b1ac4ffdaea54b577",
-        "patch": "patches/omarchy/notification-hover-close.patch",
-        "patchSha256": "f9c57fba4e3ce99cbfa32c2e497a58c1afd8627302991454ca023c1f9e149d95",
-        "targets": [
-          {
-            "path": "shell/plugins/notifications/components/NotificationCard.qml",
-            "beforeSha256": "3f023446cfe26b9f70570d7088baab31e56ca374c4a206a7c098b09d36cdff3d",
-            "afterSha256": "e1b5bae943d2e3b495741bc845b4fd981c274be538ea01799c46026f9db0fe49"
-          }
-        ]
-      },
-      {
-        "id": "notification-screen-privacy",
-        "description": "Hide and pause notification popups while the screensaver or lock surface obscures the session.",
-        "reference": "https://github.com/basecamp/omarchy/pull/8247",
-        "patch": "patches/omarchy/notification-screen-privacy.patch",
-        "patchSha256": "11248cba5a641f8174d3cb51974f56950cacf868ebf2b90b7c45021ba9cfeaf1",
-        "targets": [
-          {
-            "path": "shell/plugins/notifications/Service.qml",
-            "beforeSha256": "11665542e70df80ccd3c785a6143dee2daefd2082e4f75c740adc2c9947cf7c2",
-            "afterSha256": "e1f17b537e06c4e5d904f3c7ca0292ece330503f684430272d490fa78815bf04"
-          },
-          {
-            "path": "shell/plugins/services/idle/Service.qml",
-            "beforeSha256": "c61f91b55adf864e4ce571526644727b7a2e9f672964af8098b9fd9a4913eee2",
-            "afterSha256": "43f7d1dbf07885316ea7cb58b4513ad4ff5287abe5da1b91b85daace6b940b46"
-          }
-        ]
-      }
-    ],
+    "backports": [],
     "postBuildUserInstallers": [
       {
         "id": "1password-arm64",
