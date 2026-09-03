@@ -136,6 +136,17 @@ for tool in awk bash chmod curl ditto file grep install mkdir mktemp patch \
   command -v "$tool" >/dev/null 2>&1 || die "required tool is unavailable: $tool"
 done
 
+python_bin=
+for candidate in python3.13 python3.12 python3; do
+  if command -v "$candidate" >/dev/null 2>&1 &&
+     "$candidate" -c 'import sys; raise SystemExit(sys.version_info < (3, 12))' >/dev/null 2>&1; then
+    python_bin=$(command -v "$candidate")
+    break
+  fi
+done
+[[ -n $python_bin ]] || die "Python 3.12+ is required for the QEMU build"
+log "Using Python: $python_bin ($($python_bin --version 2>&1))"
+
 [[ $(uname -s) == Darwin ]] || die "this source build requires macOS"
 [[ $(uname -m) == arm64 ]] || die "this source build requires Apple Silicon (arm64)"
 macos_major=$(sw_vers -productVersion | awk -F. '{ print $1 }')
@@ -461,6 +472,7 @@ log "Configuring QEMU 11.1.1 (HVF-only, Cocoa/VirGL, SLIRP, SDL audio, virtio-9p
       --disable-debug-info \
       --disable-werror \
       --disable-download \
+      --python="$python_bin" \
       --extra-cflags="-mmacosx-version-min=$macos_deployment_target -Werror=unguarded-availability-new" \
       --extra-ldflags="-mmacosx-version-min=$macos_deployment_target" \
       --ninja="$ninja"
