@@ -398,7 +398,8 @@ import sys
 
 source = pathlib.Path(sys.argv[1]).read_text().splitlines()
 sections = [line[1:-1] for line in source if re.fullmatch(r"\[[A-Za-z0-9@._+-]+\]", line)]
-if sections != ["options", "core", "extra", "alarm", "aur", "omarchy"]:
+if sections not in (["options", "core", "extra", "alarm", "aur"],
+                    ["options", "core", "extra", "alarm", "aur", "omarchy"]):
     raise SystemExit(1)
 
 output = []
