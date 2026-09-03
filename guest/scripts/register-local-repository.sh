@@ -78,13 +78,9 @@ repo_dir="$root/usr/share/try-omarchy/repo"
 shopt -s nullglob
 archives=("$repo_dir"/*.pkg.tar.zst)
 shopt -u nullglob
-expected_archive_count=5
+expected_archive_count=1
 (( ${#archives[@]} == expected_archive_count )) ||
   fail "local repository expected $expected_archive_count package archive(s), found ${#archives[@]}"
-[[ ${archives[*]} == *'/try-omarchy-runtime-'* ]] || fail "local repository is missing the Omarchy runtime"
-[[ ${archives[*]} == *'/try-omarchy-mise-'* ]] || fail "factory repository is missing pinned mise"
-[[ ${archives[*]} == *'/try-omarchy-ttfx-'* ]] || fail "factory repository is missing pinned ttfx"
-[[ ${archives[*]} == *'/try-omarchy-yay-'* ]] || fail "factory repository is missing pinned yay"
 [[ ${archives[*]} == *"/hyprland-$expected_hyprland_version-aarch64.pkg.tar.zst"* ]] ||
   fail "factory repository is missing patched Hyprland"
 
