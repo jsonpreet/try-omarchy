@@ -162,7 +162,7 @@ install -m 0644 "$macos_dir/qemu-persistent-storage.sh" \
 install -m 0644 "$macos_dir/qemu-port-forwarding.sh" \
   "$contents/Resources/scripts/qemu-port-forwarding.sh"
 for guest_resource in \
-  LICENSE.omarchy \
+  LICENSE.orbit \
   SHA256SUMS \
   build-spec.json \
   guest-manifest.json \

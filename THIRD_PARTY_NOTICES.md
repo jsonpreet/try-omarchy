@@ -5,7 +5,7 @@ licenses. The repository's MIT license applies only to this project's original
 code.
 
 - **Omarchy** — pinned from `basecamp/omarchy`; MIT. Its license is copied into
-  every guest artifact as `LICENSE.omarchy`.
+  every guest artifact as `LICENSE.orbit`.
 - **QEMU** — GPL-2.0 and other component licenses. Release maintainers must
   provide the corresponding source and notices required by the exact bundled
   build.

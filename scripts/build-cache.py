@@ -19,7 +19,7 @@ from typing import Any
 
 SCHEMA_VERSION = 2
 GUEST_ARTIFACTS = {
-    "LICENSE.omarchy",
+    "LICENSE.orbit",
     "build-spec.json",
     "initramfs-linux.img",
     "packages.lock.txt",

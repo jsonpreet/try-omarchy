@@ -48,7 +48,7 @@ FAKE_GUEST_BUILDER = textwrap.dedent(
     output = root / "dist/guest"
     output.mkdir(parents=True, exist_ok=True)
     artifacts = {
-        "LICENSE.omarchy",
+        "LICENSE.orbit",
         "build-spec.json",
         "initramfs-linux.img",
         "packages.lock.txt",

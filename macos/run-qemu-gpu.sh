@@ -239,7 +239,7 @@ def sha256(path: Path) -> str:
 
 guest = Path(sys.argv[1])
 expected_artifacts = {
-    "LICENSE.omarchy": ("guest-license", "text/plain"),
+    "LICENSE.orbit": ("guest-license", "text/plain"),
     "build-spec.json": ("guest-metadata", "application/json"),
     "initramfs-linux.img": ("guest-initramfs", "application/vnd.linux.initramfs"),
     "packages.lock.txt": ("guest-metadata", "text/plain"),
