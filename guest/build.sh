@@ -82,7 +82,7 @@ done
 output=$(mkdir -p "$output" && cd "$output" && pwd)
 work=$(mkdir -p "$work" && cd "$work" && pwd)
 if [[ -z $source_dir ]]; then
-  source_dir="$work/omarchy-source"
+  source_dir="$work/orbit-source"
   "$guest_dir/scripts/fetch-source.sh" --destination "$source_dir" --spec "$spec"
 else
   source_dir=$(cd "$source_dir" && pwd)

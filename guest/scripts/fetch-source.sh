@@ -56,10 +56,10 @@ if [[ -d $destination/.git ]]; then
   if actual_commit=$(git -C "$destination" rev-parse --verify HEAD 2>/dev/null) && \
       actual_tree=$(git -C "$destination" rev-parse 'HEAD^{tree}' 2>/dev/null); then
     if [[ $actual_commit == "$commit" && $actual_tree == "$tree" && -z $(git -C "$destination" status --porcelain --untracked-files=all) ]]; then
-      echo "Using verified Omarchy checkout at $destination"
+      echo "Using verified Orbit checkout at $destination"
       exit 0
     fi
-    fail "existing destination is not the clean pinned Omarchy checkout: $destination"
+    fail "existing destination is not the clean pinned Orbit checkout: $destination"
   fi
 
   # A builder interrupted during the initial fetch leaves a valid repository
@@ -87,7 +87,7 @@ if [[ -d $destination/.git ]]; then
   [[ $actual_tree == "$tree" ]] || fail "recovered checkout tree mismatch"
   [[ -z $(git -C "$destination" status --porcelain --untracked-files=all) ]] || \
     fail "recovered checkout is not clean"
-  echo "Recovered verified Omarchy checkout at $destination"
+  echo "Recovered verified Orbit checkout at $destination"
   exit 0
 fi
 
@@ -107,4 +107,4 @@ actual_commit=$(git -C "$destination" rev-parse HEAD)
 actual_tree=$(git -C "$destination" rev-parse 'HEAD^{tree}')
 [[ $actual_commit == "$commit" ]] || fail "downloaded commit mismatch"
 [[ $actual_tree == "$tree" ]] || fail "downloaded tree mismatch"
-echo "Fetched verified Omarchy $commit"
+echo "Fetched verified Orbit $commit"
