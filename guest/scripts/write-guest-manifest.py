@@ -14,12 +14,12 @@ from pathlib import Path
 FILES = {
     "vmlinuz-linux": ("guest-kernel", "application/vnd.linux.kernel"),
     "initramfs-linux.img": ("guest-initramfs", "application/vnd.linux.initramfs"),
-    "rootfs.ext4": ("guest-rootfs", "application/vnd.omarchy.ext4"),
+    "rootfs.ext4": ("guest-rootfs", "application/vnd.orbit.ext4"),
     "rootfs.ext4.zst": ("guest-rootfs-compressed", "application/zstd"),
     "provenance.json": ("guest-metadata", "application/json"),
     "build-spec.json": ("guest-metadata", "application/json"),
     "packages.lock.txt": ("guest-metadata", "text/plain"),
-    "LICENSE.omarchy": ("guest-license", "text/plain"),
+    "LICENSE.orbit": ("guest-license", "text/plain"),
 }
 
 
@@ -65,7 +65,7 @@ def main() -> None:
         guest["profile"] = spec["guest"]["profile"]
     payload = {
         "schemaVersion": 1,
-        "kind": "try-omarchy-guest-artifacts",
+        "kind": "orbit-guest-artifacts",
         "upstream": spec["upstream"],
         "normalizedUpstreamTree": source_tree,
         "build": {

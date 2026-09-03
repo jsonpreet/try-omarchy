@@ -79,7 +79,7 @@ install -m 0644 "$root$kernel_source" "$output/vmlinuz-linux"
 install -m 0644 "$root$initramfs_source" "$output/initramfs-linux.img"
 install -m 0644 "$root/usr/share/try-omarchy/build-spec.json" "$output/build-spec.json"
 install -m 0644 "$root/usr/share/try-omarchy/provenance.json" "$output/provenance.json"
-install -m 0644 "$root/usr/share/licenses/omarchy/LICENSE" "$output/LICENSE.omarchy"
+install -m 0644 "$root/usr/share/licenses/orbit/LICENSE" "$output/LICENSE.orbit"
 if [[ -f $root/usr/share/try-omarchy/packages.lock.txt ]]; then
   install -m 0644 "$root/usr/share/try-omarchy/packages.lock.txt" "$output/packages.lock.txt"
 fi
@@ -90,7 +90,7 @@ python3 "$guest_dir/scripts/write-guest-manifest.py" --directory "$output" --spe
 (
   cd "$output"
   sha256sum \
-    LICENSE.omarchy \
+    LICENSE.orbit \
     build-spec.json \
     guest-manifest.json \
     initramfs-linux.img \
