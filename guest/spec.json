@@ -11,8 +11,8 @@
   "guest": {
     "profile": "factory",
     "hostname": "orbit-factory",
-    "username": null,
-    "uid": null,
+    "username": "orbit",
+    "uid": 1000,
     "defaultTheme": null,
     "virtualDisplay": {
       "width": 1600,

@@ -122,7 +122,8 @@ EOF
 printf 'en_US.UTF-8 UTF-8\n' >"$root/etc/locale.gen"
 printf 'LANG=en_US.UTF-8\n' >"$root/etc/locale.conf"
 printf 'KEYMAP=us\n' >"$root/etc/vconsole.conf"
-# An unprovisioned machine receives a new identity from systemd on first boot.
+# The factory image has a stable non-root desktop account so a fresh VM can
+# reach the Orbit desktop without the removed Omarchy owner-provisioning flow.
 : >"$root/etc/machine-id"
 ln -sfn /usr/share/zoneinfo/UTC "$root/etc/localtime"
 
@@ -151,6 +152,16 @@ find "$root/var/cache/pacman/pkg" -mindepth 1 -maxdepth 1 -type f -delete 2>/dev
 mkdir -p "$root/usr/local/lib/try-omarchy"
 install -m 0755 "$guest_dir/scripts/finalize-rootfs.sh" "$root/usr/local/lib/try-omarchy/finalize-rootfs"
 install -m 0644 "$spec" "$root/usr/share/try-omarchy/build-spec.json"
+
+# SDDM must present the Orbit desktop on a fresh ephemeral VM. The account is
+# created in finalize-rootfs after the package transaction is complete.
+install -d -m 0755 "$root/etc/sddm.conf.d"
+cat >"$root/etc/sddm.conf.d/10-orbit-autologin.conf" <<'SDDM'
+[Autologin]
+User=orbit
+Session=omarchy.desktop
+Relogin=false
+SDDM
 
 # Record content digests before the user overlay is copied into $HOME. This is
 # the machine-readable proof that the compositor/shell runtime came from the

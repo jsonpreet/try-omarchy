@@ -20,8 +20,13 @@ read_spec() {
 }
 
 locale-gen
-# Orbit ships a single-user live runtime: root stays usable for the owner,
-# unlike Omarchy's owner-provisioning flow (no first-boot account wizard).
+# Orbit ships one non-root desktop account for the factory VM. This replaces
+# Omarchy's owner-provisioning flow while keeping the guest usable on first boot.
+if ! id orbit >/dev/null 2>&1; then
+  useradd --create-home --uid 1000 --user-group --shell /bin/bash orbit
+fi
+usermod --lock orbit
+usermod --append --groups audio,video,input,storage,network orbit
 systemctl enable NetworkManager.service
 systemctl enable systemd-resolved.service
 

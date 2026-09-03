@@ -101,8 +101,12 @@ def main() -> None:
     spec = json_file(GUEST / "spec.json")
     check(spec.get("schemaVersion") == 1, "guest spec schema is supported")
     check(spec["image"]["architecture"] == "aarch64", "guest is ARM64-only")
-    check(spec["guest"].get("profile") == "factory", "guest is an unprovisioned factory image")
-    check(spec["guest"].get("username") is None, "factory image has no baked-in user")
+    check(spec["guest"].get("profile") == "factory", "guest is an Orbit factory image")
+    check(
+        spec["guest"].get("username") == "orbit"
+        and spec["guest"].get("uid") == 1000,
+        "factory image has the Orbit desktop user",
+    )
     check(
         re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-.][A-Za-z0-9.]+)?", spec["upstream"].get("release", ""))
         is not None,
@@ -155,8 +159,8 @@ def main() -> None:
     verbatim_trees = authenticity["verbatimRuntimeTrees"]
     backported_trees = authenticity["backportedRuntimeTrees"]
     check(
-        not {"bin", "shell"} & set(verbatim_trees)
-        and backported_trees == ["bin", "shell"]
+        verbatim_trees == ["src"]
+        and backported_trees == ["shell"]
         and not set(verbatim_trees) & set(backported_trees),
         "patched bin and shell trees are separated from verbatim upstream runtime trees",
     )

@@ -288,7 +288,7 @@ if (
     manifest_guest.get("architecture") != "aarch64"
     or manifest_guest.get("distribution") != "Arch Linux"
     or manifest_profile != "factory"
-    or manifest_guest.get("username") is not None
+    or manifest_guest.get("username") != "orbit"
 ):
     fail("guest manifest is not a native ARM64 Orbit factory guest")
 
@@ -329,8 +329,8 @@ profile_contract = {
     "filesystemUuid": "89054943-1f4e-4f14-b934-d6db3fba4254",
     "sizeMiB": 6144,
     "hostname": "orbit-factory",
-    "username": None,
-    "uid": None,
+    "username": "orbit",
+    "uid": 1000,
     "defaultTheme": None,
 }
 if (
