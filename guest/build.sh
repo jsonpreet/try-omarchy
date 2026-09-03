@@ -225,26 +225,8 @@ done
 # Orbit is not an Omarchy source tree; Omarchy backports target files under
 # /usr/share/omarchy and must not be applied to the Orbit runtime.
 "$guest_dir/scripts/configure-rootfs.sh" --root "$root" --spec "$spec"
-"$guest_dir/scripts/register-omarchy-runtime.sh" \
-  --root "$root" \
-  --work "$work" \
-  --spec "$spec" \
-  --pacman-config "$pacman_config"
-"$guest_dir/scripts/register-pinned-mise.sh" \
-  --root "$root" \
-  --work "$work" \
-  --spec "$spec" \
-  --pacman-config "$pacman_config"
-"$guest_dir/scripts/register-pinned-yay.sh" \
-  --root "$root" \
-  --work "$work" \
-  --spec "$spec" \
-  --pacman-config "$pacman_config"
-"$guest_dir/scripts/register-pinned-ttfx.sh" \
-  --root "$root" \
-  --work "$work" \
-  --spec "$spec" \
-  --pacman-config "$pacman_config"
+# Orbit is a standalone runtime. It does not produce the Omarchy, mise, yay,
+# or ttfx compatibility packages registered by the original guest pipeline.
 "$guest_dir/scripts/register-patched-hyprland.sh" \
   --root "$root" \
   --work "$work" \
