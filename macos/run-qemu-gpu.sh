@@ -276,7 +276,7 @@ exact_keys(
     {"artifacts", "build", "guest", "kind", "normalizedUpstreamTree", "schemaVersion", "upstream"},
     "guest-manifest.json",
 )
-if manifest.get("schemaVersion") != 1 or manifest.get("kind") != "try-omarchy-guest-artifacts":
+if manifest.get("schemaVersion") != 1 or manifest.get("kind") != "orbit-guest-artifacts":
     fail("guest manifest identity is invalid")
 manifest_guest_raw = manifest.get("guest")
 if not isinstance(manifest_guest_raw, dict):

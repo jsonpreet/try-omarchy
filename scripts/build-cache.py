@@ -279,7 +279,7 @@ def validate_guest(root: Path, previous: dict[str, Any] | None) -> dict[str, Any
         raise CacheError("guest manifest is not an object")
     if (
         manifest.get("schemaVersion") != 1
-        or manifest.get("kind") != "try-omarchy-guest-artifacts"
+        or manifest.get("kind") != "orbit-guest-artifacts"
     ):
         raise CacheError("guest manifest identity is invalid")
     artifacts = manifest.get("artifacts")
