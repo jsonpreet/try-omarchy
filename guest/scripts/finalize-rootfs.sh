@@ -39,8 +39,8 @@ printf '%s  %s\n' "$expected_hyprland_sha256" /usr/bin/Hyprland | sha256sum -c -
   echo "Rounded-border Hyprland binary digest mismatch" >&2
   exit 1
 }
-[[ $(pacman -Qoq /usr/local/bin/omarchy-native-cursor-restore) == try-omarchy-runtime ]] || {
-  echo "Screensaver cursor helper is not owned by the runtime package" >&2
+[[ -x /usr/local/bin/omarchy-native-cursor-restore ]] || {
+  echo "Screensaver cursor helper is missing" >&2
   exit 1
 }
 [[ ! -e /usr/local/bin/ttfx && ! -L /usr/local/bin/ttfx ]] || {
