@@ -6,7 +6,7 @@
     "filesystemLabel": "orbit-factory",
     "filesystemUuid": "89054943-1f4e-4f14-b934-d6db3fba4254",
     "sizeMiB": 6144,
-    "sourceDateEpoch": 1788130066
+    "sourceDateEpoch": 1788435195
   },
   "guest": {
     "profile": "factory",
@@ -23,9 +23,9 @@
   },
   "upstream": {
     "repository": "https://github.com/jsonpreet/orbit-os",
-    "commit": "bac2d8dbe84ab205c54d7642622136ef03d0f6b7",
-    "tree": "567de5eb16b76f24723b516f980f37b317fc1936",
-    "treeSha256": "98a386e40dc6569010e8603de9c3e198e24485a5be3bc0c293ad4e0a87fe4934",
+    "commit": "6999da0ea6f3cf61d209821a2a30817b1056ca00",
+    "tree": "f73dd6bb76cbecd5c8735b8d1a958d320ada5946",
+    "treeSha256": "221298b23aac1104a6cac4d9d85d0879dc1bc3aac243c063420aa2592602db42",
     "release": "0.1.0",
     "version": "0.1.0.alpha",
     "channel": "orbit",
