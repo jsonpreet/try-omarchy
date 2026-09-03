@@ -25,7 +25,9 @@ locale-gen
 if ! id orbit >/dev/null 2>&1; then
   useradd --create-home --uid 1000 --user-group --shell /bin/bash orbit
 fi
-usermod --lock orbit
+# SDDM autologin must be able to open the session. The factory VM has no
+# sensitive host credentials and is intended for local development only.
+passwd --delete orbit
 usermod --append --groups audio,video,input,storage,network orbit
 systemctl enable NetworkManager.service
 systemctl enable systemd-resolved.service
