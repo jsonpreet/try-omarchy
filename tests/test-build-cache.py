@@ -89,6 +89,7 @@ class BuildCacheTests(unittest.TestCase):
         self.assertIn('"hostname": "orbit-factory"', launcher)
         self.assertIn('upstream.get("repository") != "https://github.com/jsonpreet/orbit-os"', launcher)
         self.assertIn('upstream.get("channel") != "orbit"', launcher)
+        self.assertIn('hyprland_identity != "95e50311ff557c54c375230e40e8e1f1e8270ce5486d6ecb9072bcd2148592d4"', launcher)
 
     @staticmethod
     def prepare_fake_guest(root: Path) -> None:
