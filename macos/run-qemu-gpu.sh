@@ -244,7 +244,7 @@ expected_artifacts = {
     "initramfs-linux.img": ("guest-initramfs", "application/vnd.linux.initramfs"),
     "packages.lock.txt": ("guest-metadata", "text/plain"),
     "provenance.json": ("guest-metadata", "application/json"),
-    "rootfs.ext4": ("guest-rootfs", "application/vnd.omarchy.ext4"),
+    "rootfs.ext4": ("guest-rootfs", "application/vnd.orbit.ext4"),
     "rootfs.ext4.zst": ("guest-rootfs-compressed", "application/zstd"),
     "vmlinuz-linux": ("guest-kernel", "application/vnd.linux.kernel"),
 }
@@ -290,7 +290,7 @@ if (
     or manifest_profile != "factory"
     or manifest_guest.get("username") is not None
 ):
-    fail("guest manifest is not a native ARM64 Omarchy factory guest")
+    fail("guest manifest is not a native ARM64 Orbit factory guest")
 
 spec, _ = load_json(guest / "build-spec.json", "build-spec.json")
 exact_keys(
@@ -325,10 +325,10 @@ if spec_profile != "factory" or manifest_profile != spec_profile:
     fail("manifest and build spec must describe the factory profile")
 
 profile_contract = {
-    "filesystemLabel": "omarchy-factory",
+    "filesystemLabel": "orbit-factory",
     "filesystemUuid": "89054943-1f4e-4f14-b934-d6db3fba4254",
     "sizeMiB": 6144,
-    "hostname": "omarchy-factory",
+    "hostname": "orbit-factory",
     "username": None,
     "uid": None,
     "defaultTheme": None,
@@ -493,8 +493,8 @@ upstream = exact_keys(
     "build spec upstream",
 )
 if (
-    upstream.get("repository") != "https://github.com/basecamp/omarchy"
-    or upstream.get("channel") != "quattro"
+    upstream.get("repository") != "https://github.com/jsonpreet/orbit-os"
+    or upstream.get("channel") != "orbit"
     or upstream.get("license") != "MIT"
     or not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+(?:[-.][A-Za-z0-9.]+)?", str(upstream.get("release", "")))
     or not isinstance(upstream.get("version"), str)

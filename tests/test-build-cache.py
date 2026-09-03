@@ -82,6 +82,14 @@ FAKE_GUEST_BUILDER = textwrap.dedent(
 
 
 class BuildCacheTests(unittest.TestCase):
+    def test_gpu_launcher_uses_orbit_factory_image_contract(self) -> None:
+        launcher = (REPOSITORY / "macos/run-qemu-gpu.sh").read_text()
+        self.assertIn('"rootfs.ext4": ("guest-rootfs", "application/vnd.orbit.ext4")', launcher)
+        self.assertIn('"filesystemLabel": "orbit-factory"', launcher)
+        self.assertIn('"hostname": "orbit-factory"', launcher)
+        self.assertIn('upstream.get("repository") != "https://github.com/jsonpreet/orbit-os"', launcher)
+        self.assertIn('upstream.get("channel") != "orbit"', launcher)
+
     @staticmethod
     def prepare_fake_guest(root: Path) -> None:
         (root / "guest").mkdir()
