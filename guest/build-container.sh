@@ -97,7 +97,7 @@ fi
 command -v docker >/dev/null || fail "docker is required"
 
 builder_image=try-omarchy-guest-builder
-docker build --platform linux/arm64 -f "$guest_dir/Containerfile" -t "$builder_image" "$repo_dir"
+docker build --platform linux/arm64 --build-arg TARGETARCH=arm64 -f "$guest_dir/Containerfile" -t "$builder_image" "$repo_dir"
 builder_digest=$(docker image inspect --format '{{.Id}}' "$builder_image")
 
 if [[ -n $refresh_package_lock ]]; then
