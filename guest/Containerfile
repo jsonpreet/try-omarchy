@@ -9,6 +9,11 @@ RUN apk add --no-cache bash curl gnupg pacman-makepkg zstd
 COPY guest/vendor/omarchy-pkgs/pacstrap-docker /usr/local/bin/pacstrap-docker
 RUN chmod 0755 /usr/local/bin/pacstrap-docker
 
+# Use the official pacman mirrorlist as a base, then prepend the three
+# regional Arch Linux ARM mirrors that currently respond with HTTP 200 for
+# every repository. The single mirror.archlinuxarm.org endpoint has been
+# unreachable from the build environment since 2026-09-04; falling back to
+# the regional mirrors keeps pacman keyring and package downloads working.
 RUN mkdir -p /etc/pacman.d /usr/share/pacman/keyrings && \
     printf '[options]\nHoldPkg = pacman glibc\nArchitecture = auto\nSigLevel = Required DatabaseOptional\nLocalFileSigLevel = Optional\n\n[core]\nInclude = /etc/pacman.d/mirrorlist\n\n[extra]\nInclude = /etc/pacman.d/mirrorlist\n\n[alarm]\nInclude = /etc/pacman.d/mirrorlist\n\n[aur]\nInclude = /etc/pacman.d/mirrorlist\n' > /etc/pacman.conf && \
     curl -fsSL https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/0b5418fc3f62860b191cd872cb2f933f9fc77841/core/pacman-mirrorlist/mirrorlist -o /tmp/mirrorlist && \
