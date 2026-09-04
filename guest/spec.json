@@ -121,7 +121,10 @@
   "inputs": {
     "packages": "packages.txt",
     "packageLock": "packages.lock.json",
-    "pacmanConfig": "pacman.aarch64.conf"
+    "pacmanConfig": "pacman.aarch64.conf",
+    "packageCachePins": [
+      "aquamarine"
+    ]
   },
   "authenticity": {
     "verbatimRuntimeTrees": [
