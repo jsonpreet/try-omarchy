@@ -3,4 +3,8 @@
 # Pinned from archlinuxarm/PKGBUILDs 0b5418fc3f62860b191cd872cb2f933f9fc77841
 # (core/pacman-mirrorlist). pacman expands $arch.
 #
+# Prefer a directly reachable regional mirror; retain the official endpoint
+# and a second regional fallback for availability.
+Server = http://de.mirror.archlinuxarm.org/$arch/$repo
+Server = http://fr.mirror.archlinuxarm.org/$arch/$repo
 Server = http://mirror.archlinuxarm.org/$arch/$repo
